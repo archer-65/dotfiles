@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Configure X
+# Configure X and KB
 xrandr --rate 144.00
 setxkbmap -layout us -variant intl &
 
@@ -21,9 +21,6 @@ nitrogen --restore &
 
 # Notifications
 dunst &
-
-# Clipboard
-clipmenud &
 
 # Disk mount
 udiskie --tray &

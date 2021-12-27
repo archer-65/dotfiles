@@ -1,17 +1,17 @@
 /*
  *
- * Author  : Aditya Shakya
+ * Author : archer-65
  *
  */
 
+@import "colors/colors.rasi"
+
 configuration {
-    show-icons:       false;
 	  font:             "Comfortaa 14";
+    show-icons:       false;
     disable-history:  false;
 	  sidebar-mode: 	  false;
 }
-
-@import "colors/colors.rasi"
 
 * {
     background-color:  @background;

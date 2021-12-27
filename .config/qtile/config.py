@@ -8,15 +8,21 @@ from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+home = os.path.expanduser('~')
+rofipath = home + "/.config/rofi"
+
 mod         = "mod4"
 terminal    = "alacritty"
 browser     = "google-chrome-stable"
 editor      = "emacsclient -c -a emacs"
 filemanager = "thunar"
 
+launcher    = rofipath + "/launcher/launcher.sh"
+powermenu   = rofipath + "/powermenu/powermenu.sh"
+clipboard   = rofipath + "/clipboard/clipboard.sh"
+
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~')
     subprocess.Popen([home + '/.config/qtile/autostart.sh'])
 
 colors = {
@@ -108,7 +114,6 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 
     ####################
     ##### PROGRAMS #####
@@ -117,6 +122,12 @@ keys = [
     # Terminal
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
+    # Rofi
+    Key([mod], "d", lazy.spawn(launcher), desc="Rofi launcher"),
+    Key([mod, "shift"], "q", lazy.spawn(powermenu), desc="Rofi powermenu"),
+    Key([mod], "c", lazy.spawn(clipboard + " copy"), desc="Rofi clipboard"),
+    Key([mod], "p", lazy.spawn(clipboard + " paste"), desc="Rofi clipboard"),
+    
     # File Manager
     Key([mod], "f", lazy.spawn(filemanager), desc="Launch file manager"),
 

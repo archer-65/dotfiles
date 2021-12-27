@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+## Author : archer-65
+
+theme="style"
+
+dir="$HOME/.config/rofi/clipboard"
+
+greenclip_copy() {
+    rofi -modi "clipboard:greenclip print" \
+         -show clipboard \
+         -run-command '{cmd}' \
+         -theme $dir/$theme
+}
+
+greenclip_paste() {
+    greenclip_copy
+    sleep 0.5
+    
+    # Capture the selection
+    TEXT="$( xclip -o -selection clipboard )"
+
+    if [ "${TEXT}x" != "x" ]; then
+        xdotool key shift+Insert
+    fi
+}
+
+greenclip_error() {
+    dunstify -u critical "Greenclip script error!"
+}
+
+case $1 in
+    copy)
+        greenclip_copy
+        ;;
+    paste)
+        greenclip_paste
+        ;;
+    *)
+        greenclip_error
+        ;;
+esac

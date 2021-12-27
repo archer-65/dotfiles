@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-## Author  : Aditya Shakya
+## Author : archer-65
 
 dir="$HOME/.config/rofi/powermenu/"
 rofi_command="rofi -theme $dir/powermenu.rasi"
@@ -22,7 +22,7 @@ confirm_exit() {
 		-i\
 		-no-fixed-num-lines\
 		-p "Are You Sure? : "\
-		-theme $HOME/.config/rofi/applets/styles/confirm.rasi
+		-theme $HOME/.config/rofi/powermenu/styles/confirm.rasi
 }
 
 # Message
