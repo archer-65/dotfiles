@@ -34,7 +34,7 @@ alias updall='paru -Syu && flatpak update'
 # Bitwarden
 alias gitpat="rbw get GitHub --full | sed -n 's/^PAT.*: //p'"
 
-# Dotfiles
+# Dotfiles - GIT BARE
 alias dots='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 ## START
