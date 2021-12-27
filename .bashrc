@@ -1,0 +1,46 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+## ENV
+export VISUAL="emacsclient -c -a emacs"
+export EDITOR="emacsclient -t"
+
+## PATH
+PATH="$PATH:$HOME/.local/bin"
+
+## PROMPT
+PS1="\[\e[32m\]π "
+PS1+="\[\e[33m\]\W "
+PS1+="\[\e[m\]"
+
+## ALIAS
+# Utils
+alias ls='ls --color=auto'
+
+# Pacman - Paru - Flatpak
+alias pac='sudo pacman -S'
+alias pacs='pacman -Ss'
+alias pacr='sudo pacman -R'
+alias pacu='sudo pacman -Syu'
+alias paclo='pacman -Qdt'
+alias pacro='paclo && sudo pacman -Rns $(pacman -Qtdq)'
+alias pacc='sudo pacman -Scc'
+alias updall='paru -Syu && flatpak update'
+
+# Bitwarden
+alias gitpat="rbw get GitHub --full | sed -n 's/^PAT.*: //p'"
+
+# Dotfiles
+alias dots='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+## START
+# Fetch
+pfetch
+
+## STARSHIP
+eval "$(starship init bash)"
+
