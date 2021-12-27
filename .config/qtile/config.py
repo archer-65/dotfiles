@@ -365,6 +365,7 @@ screens = [
                     background=colors["color2"],
                     foreground=colors["fg"],
                     padding=10,
+                    fontsize=18,
                     update_interval=10,
                 ),
                  widget.TextBox(
