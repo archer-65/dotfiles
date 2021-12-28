@@ -37,6 +37,9 @@ alias gitpat="rbw get GitHub --full | sed -n 's/^PAT.*: //p'"
 # Dotfiles - GIT BARE
 alias dots='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dotss='dots status'
+alias dotsa='dots add'
+alias dotsr='dots rm --cached'
+alias dotsrf='dots rm -r --cached'
 alias dotsu='dots add -u && dots commit -a && dots push'
 
 ## START
