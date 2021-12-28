@@ -40,7 +40,6 @@ alias dotss='dots status'
 alias dotsu='dots add -u && dots commit -a && dots push'
 
 ## START
-# Fetch
 pfetch
 
 ## STARSHIP
