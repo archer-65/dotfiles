@@ -1,0 +1,8 @@
+/** Basic config file **/
+
+configuration {
+  show-icons: true;
+  icon-theme: "rose-pine-moon-icons";
+	modi:       "window,run,ssh,windowcd,drun,combi,keys,filebrowser";
+	font:       "Iosevka Nerd Font 16";
+}
