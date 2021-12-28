@@ -95,6 +95,7 @@
     
 		title = Dunst
     class = Dunst
+
     corner_radius = 0
 
     ignore_dbusclose = false
@@ -210,6 +211,9 @@
 #[fullscreen_show_critical]
 #    msg_urgency = critical
 #    fullscreen = show
+
+[log_notifs]
+    script = ~/.local/bin/dunst_logger 
 
 #[espeak]
 #    summary = "*"
