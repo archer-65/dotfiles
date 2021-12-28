@@ -2,8 +2,8 @@
 
 ## Author : archer-65
 
-dir="$HOME/.config/rofi/powermenu/"
-rofi_command="rofi -theme $dir/powermenu.rasi"
+dir="$HOME/.config/rofi/powermenu/config.rasi"
+rofi_command="rofi -theme $dir"
 
 uptime=$(uptime -p | sed -e 's/up //g')
 cpu=$($HOME/.config/rofi/scripts/usedcpu)

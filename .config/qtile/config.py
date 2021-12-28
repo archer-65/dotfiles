@@ -8,8 +8,8 @@ from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-home = os.path.expanduser('~')
-rofipath = home + "/.config/rofi"
+home    = os.path.expanduser('~')
+scripts = home + "/.local/bin/"
 
 mod         = "mod4"
 terminal    = "alacritty"
@@ -17,25 +17,25 @@ browser     = "google-chrome-stable"
 editor      = "emacsclient -c -a emacs"
 filemanager = "thunar"
 
-launcher    = rofipath + "/launcher/launcher.sh"
-powermenu   = rofipath + "/powermenu/powermenu.sh"
-clipboard   = rofipath + "/clipboard/clipboard.sh"
+launcher    = scripts + "rofi_launcher"
+powermenu   = scripts + "rofi_powermenu"
+clipboard   = scripts + "rofi_clipboard"
 
 @hook.subscribe.startup_once
 def autostart():
     subprocess.Popen([home + '/.config/qtile/autostart.sh'])
 
 colors = {
-    "fg": ["#e0def4", "#ffffff"],
-    "bg": ["#232136", "#232136"],
-    "grey": ["#817c9c","#817c9c"],
-    "active": ["#3e8fb0", "#3e8fb0"],
-    "inactive": ["#59546d","#59546d"],
-    "urgent": ["#eb6f92", "#eb6f92"],
-    "color1": ["#f6c177", "#f6c177"],
-    "color2": ["#ea9a97", "#ea9a97"],
-    "color3": ["#9ccfd8", "#9ccfd8"],
-    "color4": ["#c4a7e7", "#bc96f7"],
+    "fg"       : ["#e0def4", "#ffffff"],
+    "bg"       : ["#232136", "#232136"],
+    "grey"     : ["#817c9c", "#817c9c"],
+    "active"   : ["#3e8fb0", "#3e8fb0"],
+    "inactive" : ["#59546d", "#59546d"],
+    "urgent"   : ["#eb6f92", "#eb6f92"],
+    "color1"   : ["#f6c177", "#f6c177"],
+    "color2"   : ["#ea9a97", "#ea9a97"],
+    "color3"   : ["#9ccfd8", "#9ccfd8"],
+    "color4"   : ["#c4a7e7", "#bc96f7"],
 }
     
 keys = [

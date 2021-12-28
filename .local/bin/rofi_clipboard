@@ -2,15 +2,13 @@
 
 ## Author : archer-65
 
-theme="style"
-
-dir="$HOME/.config/rofi/clipboard"
+dir="$HOME/.config/rofi/clipboard/config"
 
 greenclip_copy() {
     rofi -modi "clipboard:greenclip print" \
          -show clipboard \
          -run-command '{cmd}' \
-         -theme $dir/$theme
+         -theme $dir
 }
 
 greenclip_paste() {
