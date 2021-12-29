@@ -12,15 +12,10 @@ greenclip_copy() {
 }
 
 greenclip_paste() {
-    greenclip_copy
+    greenclip_copy 
     sleep 0.5
-    
-    # Capture the selection
-    TEXT="$( xclip -o -selection clipboard )"
-
-    if [ "${TEXT}x" != "x" ]; then
-        xdotool key shift+Insert
-    fi
+    xclip -o selection clipboard
+    xdotool key shift+Insert
 }
 
 greenclip_error() {

@@ -82,7 +82,6 @@
 		enable_recursive_icon_lookup = true
     #icon_path = /usr/share/icons/rose-pine-moon-icons/48x48/status/:/usr/share/icons/rose-pine-moon-icons/48x48/devices/:/usr/share/icons/rose-pine-moon-icons/48x48/apps/
 
-
     ### History ###
 
     sticky_history = yes
@@ -211,9 +210,6 @@
 #[fullscreen_show_critical]
 #    msg_urgency = critical
 #    fullscreen = show
-
-[log_notifs]
-    script = ~/.local/bin/dunst_logger 
 
 #[espeak]
 #    summary = "*"

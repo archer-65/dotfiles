@@ -20,6 +20,9 @@ filemanager = "thunar"
 launcher    = scripts + "rofi_launcher"
 powermenu   = scripts + "rofi_powermenu"
 clipboard   = scripts + "rofi_clipboard"
+volume      = scripts + "volume"
+
+layout_test = ["monadwide", "monadtall"]
 
 @hook.subscribe.startup_once
 def autostart():
@@ -44,53 +47,103 @@ keys = [
     #########################
     
     # Switch between windows
-    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    Key([mod], "h",
+        lazy.layout.left(),
+        desc="Move focus to left"),
+
+    Key([mod], "l",
+        lazy.layout.right(),
+        desc="Move focus to right"),
+
+    Key([mod], "j",
+        lazy.layout.down(),
+        desc="Move focus down"),
+
+    Key([mod], "k",
+        lazy.layout.up(),
+        desc="Move focus up"),
+
+    Key([mod], "space",
+        lazy.layout.next(),
+        desc="Move window focus to other window"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h",
-        # Layout Tall
-        lazy.layout.swap_left().when(layout="MonadTall"),
-        # Others
-        lazy.layout.shuffle_left(),
-        desc="Move window to the left"),
+        lazy.layout.swap_left(),
+        lazy.layout.swap_column_left(),
+        lazy.layout.shuffle_left().when(layout="bsp"),
+        desc="Move window to the left or swap column"),
     
     Key([mod, "shift"], "l",
-        # Layout Tall
-        lazy.layout.swap_right().when(layout="MonadTall"),
-        # Others
-        lazy.layout.shuffle_right(),
-        desc="Move window to the right"),
+        lazy.layout.swap_right(),
+        lazy.layout.swap_column_right(),
+        lazy.layout.shuffle_right().when(layout="bsp"),
+        desc="Move window to the right or swap column"),
     
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-
-    # Swap columns for Columns layout
-    Key([mod, "shift", "mod1"], "h" ,lazy.layout.swap_column_left().when(layout="columns"), desc="Move column to left"),
-    Key([mod, "shift", "mod1"], "l" ,lazy.layout.swap_column_right().when(layout="columns"), desc="Move column to right"),
+    Key([mod, "shift"], "j",
+        lazy.layout.shuffle_down() ,
+        desc="Move window down"),
+    
+    Key([mod, "shift"], "k",
+        lazy.layout.shuffle_up(),
+        desc="Move window up"),
     
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod, "control"], "h",
+        lazy.layout.grow_left(),
+        desc="Grow window to the left"),
+    
+    Key([mod, "control"], "l",
+        lazy.layout.grow_right(),
+        desc="Grow window to the right"),
+    
+    Key([mod, "control"], "j",
+        lazy.layout.grow_down(),
+        desc="Grow window down"),
+    
+    Key([mod, "control"], "k",
+        lazy.layout.grow_up(),
+        desc="Grow window up"),
+    
+    Key([mod], "n",
+        lazy.layout.normalize(),
+        desc="Reset all window sizes (secondary clients)"),
 
     # Monad
-    Key([mod], "i", lazy.layout.grow(), desc="Grow Monad"),
-    Key([mod], "m", lazy.layout.shrink(), desc="Shrink Monad"),
-    Key([mod, "shift"], "space", lazy.layout.flip(), desc="Flip layout"),
+    Key([mod], "equal",
+        lazy.layout.grow(),
+        desc="Grow Monad"),
+    
+    Key([mod], "minus",
+        lazy.layout.shrink(),
+        desc="Shrink Monad"),
+    
+    Key([mod, "shift"], "space",
+        lazy.layout.flip(),
+        desc="Flip layout"),
+
+    Key([mod], "m",
+        lazy.layout.maximize(),
+        desc="Toggle maximize for focused"),
 
     # BSP
-    Key([mod, "mod1"], "j", lazy.layout.flip_down(), desc="Flip BSP down"),
-    Key([mod, "mod1"], "k", lazy.layout.flip_up(), desc="Flip BSP up"),
-    Key([mod, "mod1"], "h", lazy.layout.flip_left(), desc="Flip BSP left"),
-    Key([mod, "mod1"], "l", lazy.layout.flip_right(), desc="Flip BSP right"),
+    Key([mod, "mod1"], "j",
+        lazy.layout.flip_down(),
+        desc="Flip BSP down"),
+    
+    Key([mod, "mod1"], "k",
+        lazy.layout.flip_up(),
+        desc="Flip BSP up"),
+
+    Key([mod, "mod1"], "h",
+        lazy.layout.flip_left(),
+        desc="Flip BSP left"),
+
+    Key([mod, "mod1"], "l",
+        lazy.layout.flip_right(),
+        desc="Flip BSP right"),
     
     # Switch to next/prev
     Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
@@ -100,36 +153,67 @@ keys = [
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
+    # ATM for BSP and Columns
+    Key([mod, "shift"], "Return",
+        lazy.layout.toggle_split(),
+        desc="Toggle between split and unsplit sides of stack"),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "shift"], "Tab", lazy.prev_layout(), desc="Toggle between layouts (backward)"),
 
     # Window control
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating for focused window"),
+    Key([mod], "w",
+        lazy.window.kill(),
+        desc="Kill focused window"),
+    
+    Key([mod], "t",
+        lazy.window.toggle_floating(),
+        desc="Toggle floating for focused window"),
 
     # Qtile utils
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "shift"], "r", lazy.restart(), desc="Restart Qtile"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
+    Key([mod, "control"], "r",
+        lazy.reload_config(),
+        desc="Reload the config"),
+    
+    Key([mod, "shift"], "r",
+        lazy.restart(),
+        desc="Restart Qtile"),
+    
+    Key([mod, "control"], "q",
+        lazy.shutdown(),
+        desc="Shutdown Qtile"),
 
     ####################
     ##### PROGRAMS #####
     ####################
 
     # Terminal
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Return",
+        lazy.spawn(terminal),
+        desc="Launch terminal"),
 
     # Rofi
-    Key([mod], "d", lazy.spawn(launcher), desc="Rofi launcher"),
-    Key([mod, "shift"], "q", lazy.spawn(powermenu), desc="Rofi powermenu"),
-    Key([mod], "c", lazy.spawn(clipboard + " copy"), desc="Rofi clipboard"),
-    Key([mod], "p", lazy.spawn(clipboard + " paste"), desc="Rofi clipboard"),
+    Key([mod], "d",
+        lazy.spawn(launcher),
+        desc="Rofi launcher"),
     
+    Key([mod, "shift"], "q",
+        lazy.spawn(powermenu),
+        desc="Rofi powermenu"),
+
+    Key([mod], "comma",
+        lazy.spawn(clipboard + " copy"),
+        desc="Rofi clipboard"),
+    
+    Key([mod], "period",
+        lazy.spawn(clipboard + " paste"),
+        desc="Rofi clipboard"),
+
     # File Manager
-    Key([mod], "f", lazy.spawn(filemanager), desc="Launch file manager"),
+    Key([mod], "f",
+        lazy.spawn(filemanager),
+        desc="Launch file manager"),
 
     ## Keychord with R(un)
     KeyChord([mod], "r", [
@@ -138,6 +222,22 @@ keys = [
         # Editor
         Key([], "e", lazy.spawn(editor))]),
 
+    #################
+    ##### MEDIA #####
+    #################
+
+    # Volume
+    Key([], "XF86AudioRaiseVolume",
+        lazy.spawn(volume + " up"),
+        desc="Volume up"),
+    
+    Key([], "XF86AudioLowerVolume",
+        lazy.spawn(volume + " down"),
+        desc="Volume down"),
+    
+    Key([], "XF86AudioMute",
+        lazy.spawn(volume + " mute"),
+        desc="Volume toggle mute"),
 ]
 
 #groups = [Group(i) for i in "123456789"]
@@ -180,12 +280,9 @@ layouts = [
     layout.Columns(
         **layout_theme,
         margin = 10,
-        grow_amount =5,
+        grow_amount = 5,
         num_columns = 3,
         #name = "Three Col"
-    ),
-    layout.Max(
-        #name = "Monocle"
     ),
     layout.Bsp(
         **layout_theme,
@@ -193,15 +290,18 @@ layouts = [
         ratio = 1.5,
         #name = "Bsp",
     ),
-    layout.MonadWide(
-        **layout_theme,
-        margin = 10,
-        #name = "Mirror Tall",
+    layout.Max(
+        #name = "Monocle"
     ),
     layout.Floating(
         **layout_theme,
         #name = "Floating"
-    )
+    ),
+    # layout.MonadWide(
+    #     **layout_theme,
+    #     margin = 10,
+    #     #name = "Mirror Tall",
+    # ),
     # layout.Stack(num_stacks=2),
     # layout.Matrix(),
     # layout.RatioTile(),
