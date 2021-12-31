@@ -1,0 +1,217 @@
+#####################
+##### VARIABLES #####
+#####################
+
+# Modifier Win-Key
+set $mod Mod4
+
+# Scripts directory
+set $bin $HOME/.local/bin
+
+# Programs
+set $term    alacritty
+set $browser google-chrome-stable
+set $editor  emacsclient -c -a emacs
+set $filem   thunar
+
+######################
+##### APPEARANCE #####
+######################
+
+# Font for windows title and status bar
+font pango:Source Sans Pro, Source Han Sans JP 14
+
+# Gaps
+gaps inner 10
+gaps outer -5
+
+# COLORS
+# class                 border  bground text    indicator child_border
+client.focused          #3e8fb0 #3e8fb0 #2a273f #9ccfd8   #3e8fb0
+client.focused_inactive #232136 #232136 #e0def4 #59546d   #59546d
+client.unfocused        #232136 #232136 #e0def4 #59546d   #59546d
+client.urgent           #44475A #eb6f92 #e0def4 #eb6f92   #eb6f92
+client.placeholder      #232136 #232136 #e0def4 #232136   #232136
+
+client.background       #e0def4
+
+# BAR
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+#####################
+##### BEHAVIOUR #####
+#####################
+
+# Pointer
+focus_follows_mouse yes
+
+# Title
+for_window [class="^.*"] border pixel 3
+
+# Switch to actual workspace and go back
+workspace_auto_back_and_forth yes
+
+#####################
+##### AUTOSTART #####
+#####################
+
+# Configure X and KB
+exec --no-startup-id xrandr --rate 144.00
+exec --no-startup-id setxkbmap -layout us -variant intl
+
+# Polkit
+exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
+
+# Lockscreen
+exec --no-startup-id xss-lock -l -- betterlockscreen -l blur --off 300
+
+# CoreCtrl
+exec --no-startup-id corectrl
+
+# Compositor
+exec --no-startup-id picom -b
+
+# Wallpaper
+exec --no-startup-id nitrogen --restore
+
+# Notifications
+exec --no-startup-id dunst
+
+# Network
+exec --no-startup-id nm-applet
+
+# Screenshots
+exec --no-startup-id flameshot
+
+####################
+##### KEYBINDS #####
+####################
+
+##### I3 #####
+
+# Reload the configuration
+bindsym $mod+ctrl+r reload
+# Restart i3 inplace
+bindsym $mod+Shift+r restart
+
+##### WINDOWS #####
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Kill focused window
+bindsym $mod+w kill
+
+# Change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Change focus between tiling/floating windows
+bindsym $mod+Shift+t focus mode_toggle
+
+# Focus the parent/child container
+bindsym $mod+bracketleft focus parent
+bindsym $mod+bracketright child
+
+# Move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Resize windows
+bindsym $mod+ctrl+h resize shrink width 5 px or 5 ppt
+bindsym $mod+ctrl+j resize grow height 5 px or 5 ppt
+bindsym $mod+ctrl+k resize shrink height 5 px or 5 ppt
+bindsym $mod+ctrl+l resize grow width 5 px or 5 ppt
+
+##### LAYOUT #####
+
+# Enter fullscreen mode for the focused container
+bindsym F11 fullscreen toggle
+
+# Toggle tiling/floating
+bindsym $mod+t floating toggle
+
+# Split toggle: horizontal/vertical
+bindsym $mod+o split toggle
+
+# Change container layout (default, stacked, tabbed, toggle split)
+# NOTE: There are only two layouts due to artifacts caused by gaps and i3 title (present in other layouts)
+bindsym $mod+Tab layout toggle all
+
+# Gaps
+bindsym $mod+Shift+plus  gaps inner all plus  5 ; gaps outer all plus  5
+bindsym $mod+Shift+minus gaps inner all minus 5 ; gaps outer all minus 5
+
+##### WORKSPACES #####
+
+# Names
+set $ws1 "1:一"
+set $ws2 "2:二"
+set $ws3 "3:三"
+set $ws4 "4:四"
+set $ws5 "5:五"
+set $ws6 "6:六"
+
+# Switch to ws
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+
+# Switch to next/previous ws
+bindsym $mod+Right workspace next
+bindsym $mod+Left  workspace prev
+
+# Move to ws and switch to ws
+bindsym $mod+Shift+1 move container to workspace number $ws1  ; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2  ; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3  ; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4  ; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5  ; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6  ; workspace $ws6
+
+# Move to next/previous and switch
+bindsym $mod+Shift+Right move container to workspace next ; workspace next
+bindsym $mod+Shift+Left  move container to workspace prev ; workspace prev
+
+##### XF86 #####
+
+# Audio
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id $bin/volume up && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id $bin/volume down $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id $bin/volume mute && $refresh_i3status
+#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+##### PROGRAMS #####
+
+# Term
+bindsym $mod+Return exec $term
+
+# File manager
+bindsym $mod+f exec $filem
+
+# Editor
+bindsym $mod+e exec $editor
+
+# Launcher
+bindsym $mod+d exec --no-startup-id $bin/rofi_launcher
+
+# Powermenu
+bindsym $mod+Shift+q exec $bin/rofi_powermenu
+
+# Clipboard
+bindsym $mod+comma  exec $bin/rofi_clipboard copy
+bindsym $mod+period exec $bin/rofi_clipboard paste
+
+# Bitwarden
+bindsym $mod+p exec rofi-rbw
+
+# Emojis
+bindsym $mod+slash exec $bin/rofi_emoji

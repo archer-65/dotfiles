@@ -22,9 +22,6 @@ nitrogen --restore &
 # Notifications
 dunst &
 
-# Disk mount
-udiskie --tray &
-
 # Tray
 nm-applet &
 

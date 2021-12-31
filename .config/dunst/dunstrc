@@ -5,7 +5,7 @@
     ### Display ###
     monitor = 0
     follow = keyboard
-
+    fullscreen = pushback
     ### Geometry ###
 
     width = (300, 500)
@@ -209,7 +209,7 @@
 #    fullscreen = delay
 #[fullscreen_show_critical]
 #    msg_urgency = critical
-#    fullscreen = show
+#    fullscreen = pushback
 
 #[espeak]
 #    summary = "*"
