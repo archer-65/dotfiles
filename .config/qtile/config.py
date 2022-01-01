@@ -1,5 +1,6 @@
 from os import path
 import subprocess
+import platform
 
 from typing import List 
 
@@ -8,6 +9,9 @@ from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
 from libqtile.lazy import lazy
 
 from settings.theme import colors
+
+# Get hostname
+hostname = platform.uname().node
 
 # Expand every important dir
 home       = path.expanduser('~')
@@ -348,16 +352,48 @@ def base(fg='fg', bg='bg'):
 #         padding=-1
 #     )
 
+def laptop_extra():
+    global hostname
+    if hostname == 'quietfrost':
+        widgets_list = []
+    else:
+        widgets_list = [
+            widget.Backlight(
+                **base(fg='color4'),
+                format=' {percent:2.0%}',
+                backlight_name='acpi_video0',
+                brightness_file='brightness',
+                max_brightness_file='max_brightness',
+                change_command='xbacklight -set {0}',
+                step=5,
+                update_interval=0,
+                padding=10,
+            ),
+            widget.Battery(
+                **base(fg='color3'),
+                low_foreground=colors['urgent'],
+                format='{char} {percent:2.0%}({hour:d}:{min:02d})',
+                charge_char='',
+                full_char=' ',
+                discharge_char=' ',
+                empty_char=' ',
+                battery=0,
+                low_percentage=0.15,
+                notify_below=0.1,
+                padding=10,
+            ),
+        ]
+    return widgets_list
+
 screens= [
     Screen(
         top=bar.Bar(
             [
                 ### LEFT 
                 widget.TextBox(
-                    **base(fg='color3'),
-                    text="  ",
+                    **base(fg='color1'),
+                    text=" ",
                     font="Iosevka Nerd Font",
-                    fontsize=20,
                 ),
                 
                 widget.CurrentLayout(
@@ -401,6 +437,7 @@ screens= [
                 widget.ThermalSensor(
                     **base(fg='color2'),
                     foreground_alert=colors["urgent"],
+                    tag_sensor='Tctl' if hostname == 'quietfrost' else None,
                     fmt=" {}",
                     treshold=75,
                     update_interval=10,
@@ -442,7 +479,13 @@ screens= [
                     scroll_wait_intervals=8,
                     padding=10,
                 ),
+            ]
+            +
+            
+            laptop_extra()
 
+            +
+            [
                 widget.Clock(
                     **base(fg='fg'),
                     format=" %d %b, %a %R",
@@ -452,18 +495,17 @@ screens= [
                 widget.Systray(
                     padding=10,
                     icon_size=24,
-                )
-                
+                )      
             ],
-            size=34,
+            size=34 if hostname == 'quietfrost' else 24,
             background=colors["bg"],
-        ),
-    ),
+         ),
+     ),
 ]
 
 widget_defaults = dict(
     font="Iosevka Nerd Font",
-    fontsize=20,
+    fontsize=20 if hostname == 'quietfrost' else 12,
     foreground=colors["fg"],
     padding=3,
 )
