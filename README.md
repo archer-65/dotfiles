@@ -16,9 +16,9 @@
 - [Fonts](#fonts)
 
 <a id="info"></a>
-This is my first dotfiles' repo, managed with **[git bare](https://www.atlassian.com/git/tutorials/dotfiles)** atm, but I'm planning to switch on **[yadm](https://yadm.io/)**, alternate and templates are awesome!
+This is my first dotfiles' repo, managed with **[git bare](https://www.atlassian.com/git/tutorials/dotfiles)** atm, but I'm planning to switch to **[yadm](https://yadm.io/)**, alternate and templates are awesome!
 
-You can find also **[xMonad](https://xmonad.org/)** and **[i3](https://i3wm.org/)** configs, I have the latter as a "backup" for every kind of problem with my main WM; regarding the former...well...I threwed it away 🤪.
+You can also find **[xMonad](https://xmonad.org/)** and **[i3](https://i3wm.org/)** configs, I have the latter as a "backup" for every kind of problem with my main WM; regarding the former...well...I threw it away 🤪.
 
 <a id="de"></a>
 ## The "Desktop Environment"
