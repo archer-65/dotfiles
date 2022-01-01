@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+## Author : archer-65
+
+dir="$HOME/.config/rofi/themes/emoji"
+
+rofi -show emoji \
+     -modi emoji \
+     -theme $dir

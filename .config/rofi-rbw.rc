@@ -1,0 +1,4 @@
+action = autotype
+prompt = Select credentials
+clipboarder = xclip
+selector-args = -theme ~/.config/rofi/themes/rbw
