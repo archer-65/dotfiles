@@ -361,23 +361,22 @@ def laptop_extra():
             widget.Backlight(
                 **base(fg='color4'),
                 format=' {percent:2.0%}',
-                backlight_name='acpi_video0',
+                backlight_name='amdgpu_bl0',
                 brightness_file='brightness',
                 max_brightness_file='max_brightness',
                 change_command='xbacklight -set {0}',
                 step=5,
-                update_interval=0,
                 padding=10,
             ),
             widget.Battery(
                 **base(fg='color3'),
                 low_foreground=colors['urgent'],
-                format='{char} {percent:2.0%}({hour:d}:{min:02d})',
+                format='{char}{percent:2.0%}({hour:d}:{min:02d})',
                 charge_char='',
                 full_char=' ',
                 discharge_char=' ',
                 empty_char=' ',
-                battery=0,
+                battery=1,
                 low_percentage=0.15,
                 notify_below=0.1,
                 padding=10,
@@ -450,12 +449,13 @@ screens= [
                     partition="/home",
                     visible_on_warn=False,
                     padding=10,
+                    update_interval=1800
                 ),
 
                 widget.Memory(
                     **base(fg='color4'),
                     format="{MemUsed: .0f} MB",
-                    update_interval=10,
+                    update_interval=15,
                     padding=10,
                 ),
 
@@ -497,7 +497,7 @@ screens= [
                     icon_size=24,
                 )      
             ],
-            size=34 if hostname == 'quietfrost' else 24,
+            size=34 if hostname == 'quietfrost' else 32,
             background=colors["bg"],
          ),
      ),
@@ -505,7 +505,7 @@ screens= [
 
 widget_defaults = dict(
     font="Iosevka Nerd Font",
-    fontsize=20 if hostname == 'quietfrost' else 12,
+    fontsize=20 if hostname == 'quietfrost' else 14,
     foreground=colors["fg"],
     padding=3,
 )

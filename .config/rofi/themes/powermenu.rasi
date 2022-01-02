@@ -24,7 +24,7 @@ window {
     border-color:      @wborder;
     border-radius:     0px;
     location:          center;
-    width:             25%;
+    width:             50%;
     x-offset:          0px;
     y-offset:          0px;
 }
