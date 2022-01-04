@@ -1,0 +1,109 @@
+# OUTLOOK
+IMAPAccount outlook
+Host outlook.office365.com
+UserCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Mail/.mbsyncpass.gpg | grep 'live' | sed 's/ .*//g'" 
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Mail/.mbsyncpass.gpg | grep 'live' | sed 's/.* //g'"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+Timeout 120
+PipelineDepth 50
+
+IMAPStore outlook-remote
+Account outlook
+
+MaildirStore outlook-local
+Path ~/Mail/Outlook/
+Inbox ~/Mail/Outlook/Inbox
+SubFolders Verbatim
+
+Channel outlook
+Far :outlook-remote:
+Near :outlook-local:
+#Include everything
+Patterns *
+# Sync changes (creations/deletions) with the server
+Create Both
+Expunge Both
+Sync All
+SyncState *
+
+# GMAIL
+IMAPAccount gmail
+Host imap.gmail.com
+UserCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Mail/.mbsyncpass.gpg | grep 'gmail' | sed 's/ .*//g'" 
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Mail/.mbsyncpass.gpg | grep 'gmail' | sed 's/.* //g'"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore gmail-local
+Path ~/Mail/Gmail/
+Inbox ~/Mail/Gmail/Inbox
+Subfolders Verbatim
+
+IMAPStore gmail-remote
+Account gmail
+
+Channel gmail-inbox
+Far :gmail-remote:
+Near :gmail-local:
+Patterns "INBOX"
+Create Both
+SyncState *
+
+Channel gmail-trash
+Far :gmail-remote:"[Gmail]/Trash"
+Near :gmail-local:"Trash"
+Create Both
+SyncState *
+
+Channel gmail-sent
+Far :gmail-remote:"[Gmail]/Sent Mail"
+Near :gmail-local:"Sent Mail"
+Create Both
+SyncState *
+
+Channel gmail-starred
+Far :gmail-remote:"[Gmail]/Starred"
+Near :gmail-local:"Starred"
+Create Both
+SyncState *
+
+Channel gmail-drafts
+Far :gmail-remote:"[Gmail]/Drafts"
+Near :gmail-local:"Drafts"
+Create Both
+SyncState *
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-sent
+Channel gmail-trash
+Channel gmail-starred
+Channel gmail-drafts
+
+# UNINA
+IMAPAccount unina
+Host studenti.unina.it
+UserCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Mail/.mbsyncpass.gpg | grep 'unina' | sed 's/@.*//g'" 
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Mail/.mbsyncpass.gpg | grep 'unina' | sed 's/.* //g'"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore unina-remote
+Account unina
+
+MaildirStore unina-local
+Path ~/Mail/Unina/
+Inbox ~/Mail/Unina/Inbox
+SubFolders Verbatim
+
+Channel unina
+Far :unina-remote:
+Near :unina-local:
+#Include everything
+Patterns *
+# Sync changes (creations/deletions) with the server
+Create Both
+Expunge Both
+Sync All
+SyncState *
