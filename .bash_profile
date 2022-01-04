@@ -6,7 +6,7 @@
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-if [ "$XDG_CURRENT_DESKTOP" = "" ]
+if [ "$XDG_CURRENT_DESKTOP" != "KDE" ]
 then
     export QT_QPA_PLATFORMTHEME=qt5ct
 fi

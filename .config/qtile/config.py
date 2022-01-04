@@ -443,14 +443,14 @@ screens= [
                     padding=10,
                 ),
 
-                widget.DF(
-                    **base(fg='active'),
-                    format=" {uf}{m}({r:.0f}%)",
-                    partition="/home",
-                    visible_on_warn=False,
-                    padding=10,
-                    update_interval=1800
-                ),
+                # widget.DF(
+                #     **base(fg='active'),
+                #     format=" {uf}{m}({r:.0f}%)",
+                #     partition="/home",
+                #     visible_on_warn=False,
+                #     padding=10,
+                #     update_interval=1800
+                # ),
 
                 widget.Memory(
                     **base(fg='color4'),
@@ -488,7 +488,7 @@ screens= [
             [
                 widget.Clock(
                     **base(fg='fg'),
-                    format=" %d %b, %a %R",
+                    format=" %R",
                     padding=10,
                 ),
                 
