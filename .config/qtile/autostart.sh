@@ -25,8 +25,5 @@ nitrogen --restore &
 # Notifications
 dunst &
 
-# Tray
-nm-applet &
-
 # Screenshots background
 flameshot &

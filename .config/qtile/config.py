@@ -423,6 +423,7 @@ screens= [
 
                 ### RIGHT
                 widget.CheckUpdates(
+                    **base(fg='color3'),
                     distro="Arch_checkupdates",
                     colour_have_updates=colors["urgent"],
                     colour_no_updates=colors["color3"],
