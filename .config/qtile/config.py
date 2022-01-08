@@ -429,7 +429,7 @@ screens= [
                     colour_no_updates=colors["color3"],
                     display_format=" {updates} updates",
                     no_update_string=" no updates",
-                    update_interval="3600",
+                    update_interval=1800,
                     padding=10,
                     mouse_callbacks={"Button1": open_updates},
                 ),
