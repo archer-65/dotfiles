@@ -77,9 +77,6 @@ exec --no-startup-id nitrogen --restore
 # Notifications
 exec --no-startup-id dunst
 
-# Network
-exec --no-startup-id nm-applet
-
 # Screenshots
 exec --no-startup-id flameshot
 
@@ -149,12 +146,12 @@ bindsym $mod+Shift+minus gaps inner all minus 5 ; gaps outer all minus 5
 ##### WORKSPACES #####
 
 # Names
-set $ws1 "1:一"
-set $ws2 "2:二"
-set $ws3 "3:三"
-set $ws4 "4:四"
-set $ws5 "5:五"
-set $ws6 "6:六"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
 
 # Switch to ws
 bindsym $mod+1 workspace number $ws1
@@ -192,26 +189,26 @@ bindsym XF86AudioMute exec --no-startup-id $bin/volume mute && $refresh_i3status
 ##### PROGRAMS #####
 
 # Term
-bindsym $mod+Return exec $term
+bindsym $mod+Return exec --no-startup-id $term
 
 # File manager
-bindsym $mod+f exec $filem
+bindsym $mod+f exec --no-startup-id $filem
 
 # Editor
-bindsym $mod+e exec $editor
+bindsym $mod+e exec --no-startup-id $editor
 
 # Launcher
 bindsym $mod+d exec --no-startup-id $bin/rofi_launcher
 
 # Powermenu
-bindsym $mod+Shift+q exec $bin/rofi_powermenu
+bindsym $mod+Shift+q exec --no-startup-id $bin/rofi_powermenu
 
 # Clipboard
-bindsym $mod+comma  exec $bin/rofi_clipboard copy
-bindsym $mod+period exec $bin/rofi_clipboard paste
+bindsym $mod+comma  exec --no-startup-id $bin/rofi_clipboard copy
+bindsym $mod+period exec --no-startup-id $bin/rofi_clipboard paste
 
 # Bitwarden
-bindsym $mod+p exec rofi-rbw
+bindsym $mod+p exec --no-startup-id rofi-rbw
 
 # Emojis
-bindsym $mod+slash exec $bin/rofi_emoji
+bindsym $mod+slash exec --no-startup-id $bin/rofi_emoji

@@ -1,0 +1,271 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;==========================================================
+
+[colors]
+;background = ${xrdb:color0:#222}
+;foreground = ${xrdb:color7:#222}
+background     = #232136
+background-alt = #2a273f
+foreground     = #e0def4
+primary        = #3e8fb0
+alert          = #eb6f92
+color1         = #f6c177
+color2         = #ea9a97
+color3         = #9ccfd8
+color4         = #c4a7e7
+
+[bar/mybar]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 32
+;offset-x = 1%
+;offset-y = 1%
+radius = 0
+fixed-center = true
+
+;border-size = 10
+;border-color = #00000000
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 0
+
+line-size = 3
+
+font-0 = "JetBrainsMono Nerd Font:style=Regular:pixelsize=15;4"
+font-1 = "Font Awesome 5 Free Solid:pixelsize=15;3"
+font-2 = "Font Awesome 5 Free Regular:pixelsize=15;3"
+font-3 = "Font Awesome 5 Brands:pixelsize=15;3"
+font-4 = "Source Han Sans JP:pixelsize=15;3"
+font-5 = unifont:fontformat=truetype:size=16:antialias=false;0
+font-6 = siji:pixelsize=16;1
+
+modules-left =  i3
+modules-center = 
+modules-right = pacman-updates cpu temperature memory pulseaudio date
+
+tray-position = right
+tray-padding = 4
+tray-maxsize = 24
+tray-scale = 1.0
+tray-background = #59546d
+
+;wm-restack = bspwm
+;wm-restack = i3
+
+;override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = default
+
+enable-ipc = true
+
+[module/xwindow]
+format-prefix = "  "
+format-prefix-foreground = ${colors.color3}
+
+format = <label>
+format-foreground = ${colors.foreground}
+
+type = internal/xwindow
+label = %title:0:40:...%
+
+[module/i3]
+type = internal/i3
+
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+ws-icon-0 = 1;一
+ws-icon-1 = 2;二
+ws-icon-2 = 3;三
+ws-icon-3 = 4;四
+ws-icon-4 = 5;五
+ws-icon-5 = 6;六
+;ws-icon-default = 
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode-padding = 1
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %icon%
+label-focused-background = ${colors.background-alt}
+label-focused-foreground = ${colors.foreground}
+label-focused-underline = ${colors.primary}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %icon%
+label-unfocused-foreground = ${colors.foreground}
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %icon%
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %icon%
+label-urgent-foreground = ${colors.alert}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+;label-separator = |
+
+[module/cpu]
+type = internal/cpu
+
+interval = 5
+
+format-font = 1
+format-prefix = " "
+format-background = ${colors.color2}
+format-foreground = ${colors.background}
+format-padding = 1
+
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+
+interval = 5
+
+format-font = 2
+format-prefix = " "
+format-background = ${colors.color1}
+format-foreground = ${colors.background}
+format-padding = 1
+
+label = %mb_used%+%mb_swap_used%
+
+[module/eth]
+type = internal/network
+interface = enp42s0
+
+interval = 5
+
+format-connected-background = ${colors.color3}
+format-connected-foreground = ${colors.background}
+format-connected-padding = 1
+
+label-connected =  %downspeed%   %upspeed%
+
+[module/date]
+type = internal/date
+
+interval = 5
+
+date = "%R"
+date-alt = "%A, %d %B"
+
+format-font = 2
+format-prefix = " "
+format-background = ${colors.primary}
+format-foreground = ${colors.background}
+format-padding = 1
+
+label = %date%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+use-ui-max = false
+
+format-volume = <label-volume>
+format-padding = 1
+
+label-volume-font = 2
+label-volume =  %percentage%%
+label-volume-background = ${colors.color4}
+label-volume-foreground = ${colors.background}
+label-volume-padding = 1
+
+label-muted-font = 2
+label-muted =  Muted
+label-muted-background = ${colors.color4}
+label-muted-foreground = ${colors.background}
+label-muted-padding = 1
+
+[module/temperature]
+type = internal/temperature
+hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input
+
+warn-temperature = 70
+interval = 5
+
+format = <ramp> <label>
+format-background = ${colors.alert}
+format-foreground = ${colors.background}
+format-padding = 1
+
+label = %{A1:alacritty -e btop:}%temperature-c%%{A}
+label-foreground = ${colors.background}
+
+ramp-font = 2
+ramp-0 = ""
+ramp-foreground = ${colors.background}
+
+[module/pacman-updates]
+type = custom/script
+
+exec = checkupdates | wc -l
+interval = 1800
+
+format-background = ${colors.color3}
+format-foreground = ${colors.background}
+format-prefix = "ﮮ "
+format-padding = 1
+
+label = %output% updates
+
+click-left = "alacritty -e sudo pacman -Syu"
+
+[module/player-mpris-tail]
+type = custom/script
+
+exec = ~/.config/polybar/scripts/player-mpris-tail.py -f '  {:artist:t18:{artist}:}{:artist: - :}{:t20:{title}:}  %{A1:~/.config/polybar/scripts/player-mpris-tail.py previous:} 玲 %{A} %{A1:~/.config/polybar/scripts/player-mpris-tail.py play-pause:} {icon-reversed} %{A} %{A1:~/.config/polybar/scripts/player-mpris-tail.py next:} 怜 %{A}'
+tail = true
+
+;format-background = ${colors.color1}
+format-foreground = ${colors.foreground}
+format-padding = 1
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
