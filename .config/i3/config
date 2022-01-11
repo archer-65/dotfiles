@@ -7,6 +7,7 @@ set $mod Mod4
 
 # Scripts directory
 set $bin $HOME/.local/bin
+set $keys $HOME/.config/i3/sxhkdrc
 
 # Programs
 set $term    alacritty
@@ -59,14 +60,17 @@ workspace_auto_back_and_forth yes
 exec --no-startup-id autorandr --change 
 exec --no-startup-id setxkbmap -layout us -variant intl
 
+# Hotkeys Daemon
+exec --no-startup-id sxhkd -c $keys
+
 # Polkit
-exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Lockscreen
 exec --no-startup-id xss-lock -l -- betterlockscreen -l blur --off 300
 
 # CoreCtrl
-exec --no-startup-id corectrl
+exec --no-startup-id sleep 3 ; corectrl
 
 # Compositor
 exec --no-startup-id picom -b
