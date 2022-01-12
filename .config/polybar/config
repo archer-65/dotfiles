@@ -14,13 +14,13 @@
 [colors]
 ;background = ${xrdb:color0:#222}
 ;foreground = ${xrdb:color7:#222}
-background     = #232136
-background-alt = #393552
+background     = #191724
+background-alt = #26233a
 foreground     = #e0def4
-primary        = #3e8fb0
+primary        = #31748f
 alert          = #eb6f92
 color1         = #f6c177
-color2         = #ea9a97
+color2         = #ebbcba
 color3         = #9ccfd8
 color4         = #c4a7e7
 

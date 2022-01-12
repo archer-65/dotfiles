@@ -5,10 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-## ENV
-export VISUAL="emacsclient -c -a emacs"
-export EDITOR="emacsclient -t"
-
 ## PATH
 PATH="$PATH:$HOME/.local/bin"
 

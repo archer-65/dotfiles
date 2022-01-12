@@ -41,7 +41,7 @@
     text_icon_padding = 15
 
     frame_width = 2
-    frame_color = "#2a273f"
+    frame_color = "#1f1d2e"
     separator_color = frame
 
     sort = yes
@@ -78,7 +78,7 @@
     icon_position = left
     min_icon_size = 0
     max_icon_size = 64
-	  icon_theme = rose-pine-moon-icons
+	  icon_theme = Luv
 		enable_recursive_icon_lookup = true
     #icon_path = /usr/share/icons/rose-pine-moon-icons/48x48/status/:/usr/share/icons/rose-pine-moon-icons/48x48/devices/:/usr/share/icons/rose-pine-moon-icons/48x48/apps/
 
@@ -124,17 +124,17 @@
     per_monitor_dpi = false
 
 [urgency_low]
-    background = "#232136"
+    background = "#191724"
     foreground = "#e0def4"
     timeout = 5
 
 [urgency_normal]
-    background = "#232136"
+    background = "#191724"
     foreground = "#9ccfd8"
     timeout = 5
 
 [urgency_critical]
-    background = "#232136"
+    background = "#191724"
     foreground = "#eb6f92"
     timeout = 0
 

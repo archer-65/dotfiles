@@ -110,7 +110,7 @@ font:
 
 # Colors
 import:
-  - ~/.config/alacritty/rose-pine-dark.yml
+  - ~/.config/alacritty/rose-pine.yml
 
 # Background opacity
 #
