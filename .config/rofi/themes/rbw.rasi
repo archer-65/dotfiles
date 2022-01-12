@@ -9,7 +9,7 @@
 configuration {
     font:                 "Iosevka Nerd Font 16";
     fixed-num-lines: 			true;
-	  icon-theme: 					"rose-pine-moon-icons";
+	  icon-theme: 					"kora";
     show-icons:           true;
   	sidebar-mode: 				false;
     scroll-method:        0;

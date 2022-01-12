@@ -82,7 +82,7 @@ super + e; {e, m}
 
 # Global Run
 super + r; {t, d, c, g, p, s}
-  {telegram-desktop, discord-canary, code, github-desktop, zathura, env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U}
+  {telegram-desktop, discord, code, github-desktop, zathura, env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U}
 
 # Sysmon
 super + m; {b, h}

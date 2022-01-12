@@ -10,20 +10,22 @@ from libqtile.lazy import lazy
 
 from settings.theme import colors
 
-# Get hostname
+#####################
+##### VARIABLES #####
+#####################
+
+##### IMPORTANT #####
+
+# Modifiers
+mod         = "mod4"
+
+# Get hostname for settings
 hostname = platform.uname().node
 
 # Expand every important dir
 home       = path.expanduser('~')
 scripts    = path.join(home, ".local", "bin")
 qtile_path = path.join(home, ".config", "qtile")
-
-# Mod key and useful programs
-mod         = "mod4"
-terminal    = "alacritty"
-browser     = "google-chrome-stable"
-editor      = "emacsclient -c -a emacs"
-filemanager = "thunar"
 
 # Rofi launchers
 launcher    = path.join(scripts, "rofi_launcher")
@@ -34,13 +36,28 @@ emoji       = path.join(scripts, "rofi_emoji")
 # Media scripts
 volume      = path.join(scripts, "volume")
 
+# Programs
+terminal    = "alacritty"
+filemanager = "thunar"
+browser     = "google-chrome-stable"
+editor      = "emacsclient -c -a emacs"
+mail        = editor + " --eval '(mu4e)'"
+#git         = editor + " --eval '(magit)'"
+gitgui      = "github-desktop"
+pdfview     = "zathura"
+
 # Widget commands for callback
 update      = terminal + " -e sudo pacman -Syu"
 mixer       = terminal + " -e pulsemixer"
 
+# Call autostart script
 @hook.subscribe.startup_once
 def autostart():
     subprocess.call([path.join(qtile_path, "autostart.sh")])
+
+####################
+##### KEYBINDS #####
+####################
 
 keys = [
     #########################
@@ -147,21 +164,30 @@ keys = [
         desc="Flip BSP right"),
     
     # Switch to next/prev
-    Key([mod], "Left", lazy.screen.prev_group(), desc="Switch to previous group"),
-    Key([mod], "Right", lazy.screen.next_group(), desc="Switch to next group"),
+    Key([mod], "Left",
+        lazy.screen.prev_group(),
+        desc="Switch to previous group"),
+    
+    Key([mod], "Right",
+        lazy.screen.next_group(),
+        desc="Switch to next group"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
+    # Unsplit = 1 window displayed, like Max layout, but still with multiple stack panes
     # ATM for BSP and Columns
     Key([mod, "shift"], "Return",
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack"),
 
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod, "shift"], "Tab", lazy.prev_layout(), desc="Toggle between layouts (backward)"),
+    Key([mod], "Tab",
+        lazy.next_layout(),
+        desc="Toggle between layouts"),
+    
+    Key([mod, "shift"], "Tab",
+        lazy.prev_layout(),
+        desc="Toggle between layouts (backward)"),
 
     # Window control
     Key([mod], "w",
@@ -184,7 +210,6 @@ keys = [
     Key([mod, "control"], "q",
         lazy.shutdown(),
         desc="Shutdown Qtile"),
-
 
     ################
     ##### XF86 #####
@@ -251,19 +276,87 @@ keys = [
         lazy.spawn(terminal),
         desc="Launch terminal"),
 
-
     # File Manager
     Key([mod], "f",
         lazy.spawn(filemanager),
         desc="Launch file manager"),
 
-    ## Keychord with R(un)
+    # Browser
+    Key([mod], "b",
+        lazy.spawn(browser),
+        desc="Launch browser"),
+
+    # (E)macs
+    KeyChord([mod], "e", [
+        
+        Key([], "e",
+            lazy.spawn(editor),
+            desc="Launch Emacs"),
+
+        Key([], "m",
+            lazy.spawn(mail),
+            desc="Launch mail client"),
+
+        # Key([], "g",
+        #     lazy.spawn(git),
+        #     desc="Launch Git client"),
+    ]),
+
+    # Global (R)un
     KeyChord([mod], "r", [
-        # Browser
-        Key([], "b", lazy.spawn(browser)),
-        # Editor
-        Key([], "e", lazy.spawn(editor))]),
+
+        Key([], "t",
+            lazy.spawn("telegram-desktop"),
+            desc="Launch Telegram"),
+
+        Key([], "d",
+            lazy.spawn("discord"),
+            desc="Launch Discord"),
+
+        Key([], "c",
+            lazy.spawn("code"),
+            desc="Launch VSCode"),
+
+        Key([], "g",
+            lazy.spawn(gitgui),
+            desc="Launch Git client (GUI)"),
+
+        Key([], "p",
+            lazy.spawn(pdfview),
+            desc="Launch PDF Viewer"),
+
+        Key([], "s",
+            lazy.spawn("env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify %U"),
+            desc="Launch Spotify (with ADB)"),
+    ]),
+
+    # Sysmon
+    KeyChord([mod], "s", [
+
+        Key([], "b",
+            lazy.spawn(terminal + " -e btop")),
+
+        Key([], "h",
+            lazy.spawn(terminal + " -e htop")),
+    ]) 
 ]
+
+##### MOUSE #####
+
+mouse = [
+    Drag([mod], "Button1", lazy.window.set_position_floating(),
+         start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(),
+         start=lazy.window.get_size()),
+    Click([mod], "Button2", lazy.window.bring_to_front())
+]
+
+
+############################
+##### GROUPS + LAYOUTS #####
+############################
+
+##### GROUPS #####
 
 groups = [
     Group("1", label="一", layout="monadtall"),
@@ -273,15 +366,6 @@ groups = [
     Group("5", label="五", layout="monadtall"),
     Group("6", label="六", layout="monadtall"),
 ]
-
-# groups = [
-#     Group("1", label="", layout="monadtall"),
-#     Group("2", label="", layout="columns"),
-#     Group("3", label="", layout="monadtall"),
-#     Group("4", label="", layout="monadtall"),
-#     Group("5", label="", layout="monadtall"),
-#     Group("6", label="", layout="monadtall"),
-# ]
 
 for i in groups:
     keys.extend([
@@ -294,6 +378,8 @@ for i in groups:
              desc="Switch to & move focused window to group {}".format(i.name)),
     ])
 
+##### LAYOUT MAIN #####
+    
 layout_theme = {
     "border_width": 3,
     "border_focus": colors["active"],
@@ -322,30 +408,29 @@ layouts = [
     ),
 ]
 
+##### FLOAT RULES #####
+
 floating_layout = layout.Floating(
     float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
-        Match(wm_class='confirmreset'),  # gitk
-        Match(wm_class='bitwarden'),  # gitk
-        Match(wm_class='makebranch'),  # gitk
-        Match(wm_class='maketag'),  # gitk
-        Match(wm_class='ssh-askpass'),  # ssh-askpass
-        Match(title='branchdialog'),  # gitk
-        Match(title='pinentry'),  # GPG key password entry
-        Match(wm_class='pinentry-gtk-2'),  # GPG key password entry
+        Match(wm_class='thunar'),
+        Match(wm_class='confirmreset'), 
+        Match(wm_class='bitwarden'),  
+        Match(wm_class='makebranch'), 
+        Match(wm_class='maketag'),  
+        Match(wm_class='ssh-askpass'), 
+        Match(title='branchdialog'),  
+        Match(title='pinentry'),  
+        Match(wm_class='pinentry-gtk-2'),  
     ],
     **layout_theme,
 )
 
-# Drag floating layouts.
-mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(),
-         start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
-         start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
-]
+##################
+##### SCREEN #####
+##################
+
+##### CALLBACKS FUNCT #####
 
 def open_updates():
     qtile.cmd_spawn(update)
@@ -353,28 +438,30 @@ def open_updates():
 def open_mixer():
     qtile.cmd_spawn(mixer)
 
+##### BASE ELEMENTS #####
+
+widget_defaults = dict(
+    font="JetBrainsMono Nerd Font",
+    fontsize=20 if hostname == 'quietfrost' else 18,
+    foreground=colors["fg"],
+    padding=3,
+)
+
 def base(fg='fg', bg='bg'):
     return {
         'foreground': colors[fg],
         'background': colors[bg],
+        'padding' : 8,
     }
-
-# def separator(fg='fg', bg='bg'):
-#     return widget.TextBox(
-#         **base(fg, bg),
-#         text="\ue0be",
-#         font="Iosevka Nerd Font",
-#         fontsize=33,
-#         padding=-1
-#     )
 
 def sep(fg='fg', bg='bg'):
      return widget.Sep(
          **base(fg, bg),
-         padding = 8,
          linewidth = 0,
      )
 
+##### WIDGETS FOR LAPTOP ##### 
+ 
 def laptop_extra():
     global hostname
     if hostname == 'quietfrost':
@@ -383,7 +470,6 @@ def laptop_extra():
         ]
     else:
         widgets_list = [
-            #sep(),
             
             widget.Backlight(
                 **base(fg='bg', bg='color1'),
@@ -393,10 +479,7 @@ def laptop_extra():
                 max_brightness_file='max_brightness',
                 change_command='brightnessctl s {0}%',
                 step=5,
-                padding=8,
             ),
-
-            #sep(),
             
             widget.Battery(
                 **base(fg='bg', bg='color1'),
@@ -409,12 +492,11 @@ def laptop_extra():
                 battery=1,
                 low_percentage=0.15,
                 notify_below=0.1,
-                padding=8,
             ),
-
-            sep(),
         ]
     return widgets_list
+
+##### BAR #####
 
 screens= [
     Screen(
@@ -422,14 +504,14 @@ screens= [
             [
                 ### LEFT 
                 widget.GroupBox(
-                    padding=8,
                     active=colors["fg"],
-                    inactive=colors["fg"],
+                    inactive=colors["inactive"],
                     highlight_method="block",
                     this_current_screen_border=colors["grey"],
                     urgent_alert_method="text",
                     urgent_text=colors["urgent"],
                     disable_drag=True,
+                    padding=8,
                 ),
                 
                 widget.Spacer(),
@@ -445,19 +527,16 @@ screens= [
                 #     scroll_chars=15,
                 #     scroll_interval=0.5,
                 #     scroll_wait_intervals=8,
-                #     padding=8,
                 # ),
 
+                # widget.Spacer(),
 
                 ### RIGHT
-                
-                widget.Spacer(),
 
                 widget.CurrentLayoutIcon(
                     **base(fg='bg', bg='fg'),
                     custom_icon_paths=[path.join(qtile_path, "icons")],
                     scale=0.7,
-                    padding=8,
                 ),
 
                 sep(),
@@ -470,7 +549,6 @@ screens= [
                     display_format=" {updates} updates",
                     no_update_string="  no updates",
                     update_interval=1800,
-                    padding=8,
                     mouse_callbacks={"Button1": open_updates},
                 ),
 
@@ -480,20 +558,16 @@ screens= [
                     **base(fg='bg', bg='color2'),
                     format="  {load_percent}%",
                     update_interval=5,
-                    padding=8,
                 ),
                 
                 sep(),
                 
                 widget.ThermalSensor(
                     **base(fg='bg', bg='urgent'),
-                    foreground_alert=colors["urgent"],
-                    #font='Font Awesome 5 Free Solid',
                     tag_sensor='Tctl' if hostname == 'quietfrost' else None,
                     fmt=" {}",
                     treshold=75,
                     update_interval=5,
-                    padding=8,
                 ),
 
                 sep(),
@@ -502,7 +576,6 @@ screens= [
                     **base(fg='bg', bg='color4'),
                     format="{MemUsed: .0f} MB",
                     update_interval=5,
-                    padding=8,
                 ),
 
                 sep(),
@@ -512,7 +585,6 @@ screens= [
                     fmt=" {}",
                     limit_max_volume=True,
                     volume_app="pavucontrol",
-                    padding=8,
                     mouse_callbacks={"Button2": open_mixer},
                 ),
 
@@ -526,14 +598,12 @@ screens= [
                 widget.Clock(
                     **base(fg='bg', bg='active'),
                     format=" %R",
-                    padding=8,
                 ),
 
                 sep(),
                 
                 widget.Systray(
                     **base(bg='inactive'),
-                    padding=8,
                     icon_size=24,
                 ),
 
@@ -545,12 +615,9 @@ screens= [
      ),
 ]
 
-widget_defaults = dict(
-    font="JetBrainsMono Nerd Font",
-    fontsize=20 if hostname == 'quietfrost' else 18,
-    foreground=colors["fg"],
-    padding=3,
-)
+########################
+##### LAST DETAILS #####
+########################
 
 extension_defaults = widget_defaults.copy()
 

@@ -78,7 +78,7 @@
     icon_position = left
     min_icon_size = 0
     max_icon_size = 64
-	  icon_theme = Luv
+	  icon_theme = kora
 		enable_recursive_icon_lookup = true
     #icon_path = /usr/share/icons/rose-pine-moon-icons/48x48/status/:/usr/share/icons/rose-pine-moon-icons/48x48/devices/:/usr/share/icons/rose-pine-moon-icons/48x48/apps/
 
