@@ -235,12 +235,12 @@ keys = [
     ##### FLAMESHOT #####
 
     # Full capture
-    Key([], 'Print',
+    Key([], "Print",
         lazy.spawn("flameshot full -c"),
         desc="Full screenshot"),
 
     # Open GUI
-    Key([mod], 'Print',
+    Key([mod], "Print",
         lazy.spawn("flameshot gui"),
         desc="Capture GUI"),
 
@@ -468,7 +468,7 @@ screens= [
                     colour_have_updates=colors["bg"],
                     colour_no_updates=colors["bg"],
                     display_format=" {updates} updates",
-                    no_update_string=" no updates",
+                    no_update_string="  no updates",
                     update_interval=1800,
                     padding=8,
                     mouse_callbacks={"Button1": open_updates},
