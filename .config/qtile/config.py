@@ -185,16 +185,29 @@ keys = [
         lazy.shutdown(),
         desc="Shutdown Qtile"),
 
-    ####################
-    ##### PROGRAMS #####
-    ####################
 
-    # Terminal
-    Key([mod], "Return",
-        lazy.spawn(terminal),
-        desc="Launch terminal"),
+    ################
+    ##### XF86 #####
+    ################
 
-    # Rofi
+    # Volume
+    Key([], "XF86AudioRaiseVolume",
+        lazy.spawn(volume + " up"),
+        desc="Volume up"),
+    
+    Key([], "XF86AudioLowerVolume",
+        lazy.spawn(volume + " down"),
+        desc="Volume down"),
+    
+    Key([], "XF86AudioMute",
+        lazy.spawn(volume + " mute"),
+        desc="Volume toggle mute"),
+
+    ###################
+    ##### GENERAL #####
+    ###################
+    
+    ##### Rofi #####
     Key([mod], "d",
         lazy.spawn(launcher),
         desc="Rofi launcher"),
@@ -219,6 +232,26 @@ keys = [
         lazy.spawn("rofi-rbw"),
         desc="Rofi RBW"),
 
+    ##### FLAMESHOT #####
+
+    # Full capture
+    Key([], 'Print',
+        lazy.spawn("flameshot full -c"),
+        desc="Full screenshot"),
+
+    # Open GUI
+    Key([mod], 'Print',
+        lazy.spawn("flameshot gui"),
+        desc="Capture GUI"),
+
+    ##### APPS #####
+    
+    # Terminal
+    Key([mod], "Return",
+        lazy.spawn(terminal),
+        desc="Launch terminal"),
+
+
     # File Manager
     Key([mod], "f",
         lazy.spawn(filemanager),
@@ -230,42 +263,25 @@ keys = [
         Key([], "b", lazy.spawn(browser)),
         # Editor
         Key([], "e", lazy.spawn(editor))]),
+]
 
-    #################
-    ##### MEDIA #####
-    #################
-
-    # Volume
-    Key([], "XF86AudioRaiseVolume",
-        lazy.spawn(volume + " up"),
-        desc="Volume up"),
-    
-    Key([], "XF86AudioLowerVolume",
-        lazy.spawn(volume + " down"),
-        desc="Volume down"),
-    
-    Key([], "XF86AudioMute",
-        lazy.spawn(volume + " mute"),
-        desc="Volume toggle mute"),
+groups = [
+    Group("1", label="一", layout="monadtall"),
+    Group("2", label="二", layout="columns"),
+    Group("3", label="三", layout="monadtall"),
+    Group("4", label="四", layout="monadtall"),
+    Group("5", label="五", layout="monadtall"),
+    Group("6", label="六", layout="monadtall"),
 ]
 
 # groups = [
-#     Group("1", label="一", layout="monadtall"),
-#     Group("2", label="二", layout="columns"),
-#     Group("3", label="三", layout="monadtall"),
-#     Group("4", label="四", layout="monadtall"),
-#     Group("5", label="五", layout="monadtall"),
-#     Group("6", label="六", layout="monadtall"),
+#     Group("1", label="", layout="monadtall"),
+#     Group("2", label="", layout="columns"),
+#     Group("3", label="", layout="monadtall"),
+#     Group("4", label="", layout="monadtall"),
+#     Group("5", label="", layout="monadtall"),
+#     Group("6", label="", layout="monadtall"),
 # ]
-
-groups = [
-    Group("1", label="", layout="monadtall"),
-    Group("2", label="", layout="columns"),
-    Group("3", label="", layout="monadtall"),
-    Group("4", label="", layout="monadtall"),
-    Group("5", label="", layout="monadtall"),
-    Group("6", label="", layout="monadtall"),
-]
 
 for i in groups:
     keys.extend([
@@ -352,14 +368,25 @@ def base(fg='fg', bg='bg'):
 #         padding=-1
 #     )
 
+def sep(fg='fg', bg='bg'):
+     return widget.Sep(
+         **base(fg, bg),
+         padding = 8,
+         linewidth = 0,
+     )
+
 def laptop_extra():
     global hostname
     if hostname == 'quietfrost':
-        widgets_list = []
+        widgets_list = [
+            sep(),
+        ]
     else:
         widgets_list = [
+            #sep(),
+            
             widget.Backlight(
-                **base(fg='color4'),
+                **base(fg='bg', bg='color1'),
                 format=' {percent:2.0%}',
                 backlight_name='amdgpu_bl0',
                 brightness_file='brightness',
@@ -368,8 +395,11 @@ def laptop_extra():
                 step=5,
                 padding=10,
             ),
+
+            #sep(),
+            
             widget.Battery(
-                **base(fg='color3'),
+                **base(fg='bg', bg='color1'),
                 low_foreground=colors['urgent'],
                 format='{char}{percent:2.0%}({hour:d}:{min:02d})',
                 charge_char='',
@@ -381,6 +411,8 @@ def laptop_extra():
                 notify_below=0.1,
                 padding=10,
             ),
+
+            sep(),
         ]
     return widgets_list
 
@@ -389,31 +421,12 @@ screens= [
         top=bar.Bar(
             [
                 ### LEFT 
-                widget.TextBox(
-                    **base(fg='color1'),
-                    text=" ",
-                    font="Iosevka Nerd Font",
-                ),
-                
-                widget.CurrentLayout(
-                    **base(fg='urgent'),
-                    fmt="[{}]",
-                    padding=10,
-                ),
-
-                widget.WindowName(
-                    padding=10,
-                ),
-
-                ### CENTER
-                widget.Spacer(),
-                
                 widget.GroupBox(
-                    padding=6,
-                    active=colors["color2"],
-                    inactive=colors["color2"],
-                    highlight_method="text",
-                    this_current_screen_border=colors["active"],
+                    padding=8,
+                    active=colors["fg"],
+                    inactive=colors["fg"],
+                    highlight_method="block",
+                    this_current_screen_border=colors["grey"],
                     urgent_alert_method="text",
                     urgent_text=colors["urgent"],
                     disable_drag=True,
@@ -421,65 +434,88 @@ screens= [
                 
                 widget.Spacer(),
 
+                ### CENTER
+                
+                # widget.Mpris2(
+                #     **base(fg='fg', bg='bg'),
+                #     fmt="  {}",
+                #     name="spotify",
+                #     objname="org.mpris.MediaPlayer2.spotify",
+                #     display_metadata=["xesam:title", "xesam:artist"],
+                #     scroll_chars=15,
+                #     scroll_interval=0.5,
+                #     scroll_wait_intervals=8,
+                #     padding=8,
+                # ),
+
+
                 ### RIGHT
+                
+                widget.Spacer(),
+
+                widget.CurrentLayoutIcon(
+                    **base(fg='bg', bg='fg'),
+                    custom_icon_paths=[path.join(qtile_path, "icons")],
+                    scale=0.7,
+                    padding=8,
+                ),
+
+                sep(),
+                
                 widget.CheckUpdates(
-                    **base(fg='color3'),
+                    **base(fg='bg', bg='color3'),
                     distro="Arch_checkupdates",
-                    colour_have_updates=colors["urgent"],
-                    colour_no_updates=colors["color3"],
+                    colour_have_updates=colors["bg"],
+                    colour_no_updates=colors["bg"],
                     display_format=" {updates} updates",
                     no_update_string=" no updates",
                     update_interval=1800,
-                    padding=10,
+                    padding=8,
                     mouse_callbacks={"Button1": open_updates},
                 ),
 
+                sep(),
+
+                widget.CPU(
+                    **base(fg='bg', bg='color2'),
+                    format="  {load_percent}%",
+                    update_interval=5,
+                    padding=8,
+                ),
+                
+                sep(),
+                
                 widget.ThermalSensor(
-                    **base(fg='color2'),
+                    **base(fg='bg', bg='urgent'),
                     foreground_alert=colors["urgent"],
+                    #font='Font Awesome 5 Free Solid',
                     tag_sensor='Tctl' if hostname == 'quietfrost' else None,
-                    fmt=" {}",
+                    fmt=" {}",
                     treshold=75,
-                    update_interval=10,
-                    padding=10,
+                    update_interval=5,
+                    padding=8,
                 ),
 
-                # widget.DF(
-                #     **base(fg='active'),
-                #     format=" {uf}{m}({r:.0f}%)",
-                #     partition="/home",
-                #     visible_on_warn=False,
-                #     padding=10,
-                #     update_interval=1800
-                # ),
+                sep(),
 
                 widget.Memory(
-                    **base(fg='color4'),
-                    format="{MemUsed: .0f} MB",
-                    update_interval=15,
-                    padding=10,
+                    **base(fg='bg', bg='color4'),
+                    format="{MemUsed: .0f} MB",
+                    update_interval=5,
+                    padding=8,
                 ),
 
+                sep(),
+
                 widget.PulseVolume(
-                    **base(fg='color1'),
-                    fmt="墳 {}",
+                    **base(fg='bg', bg='color1'),
+                    fmt=" {}",
                     limit_max_volume=True,
                     volume_app="pavucontrol",
-                    padding=10,
+                    padding=8,
                     mouse_callbacks={"Button2": open_mixer},
                 ),
 
-                widget.Mpris2(
-                    **base(fg='color1'),
-                    fmt=" {}",
-                    name="spotify",
-                    objname="org.mpris.MediaPlayer2.spotify",
-                    display_metadata=["xesam:title", "xesam:artist"],
-                    scroll_chars=15,
-                    scroll_interval=0.5,
-                    scroll_wait_intervals=8,
-                    padding=10,
-                ),
             ]
             +
             
@@ -488,15 +524,20 @@ screens= [
             +
             [
                 widget.Clock(
-                    **base(fg='fg'),
+                    **base(fg='bg', bg='active'),
                     format=" %R",
-                    padding=10,
+                    padding=8,
                 ),
+
+                sep(),
                 
                 widget.Systray(
-                    padding=10,
+                    **base(bg='inactive'),
+                    padding=8,
                     icon_size=24,
-                )      
+                ),
+
+                sep(bg='inactive'),
             ],
             size=34 if hostname == 'quietfrost' else 32,
             background=colors["bg"],
@@ -505,8 +546,8 @@ screens= [
 ]
 
 widget_defaults = dict(
-    font="Iosevka Nerd Font",
-    fontsize=20 if hostname == 'quietfrost' else 14,
+    font="JetBrainsMono Nerd Font",
+    fontsize=20 if hostname == 'quietfrost' else 18,
     foreground=colors["fg"],
     padding=3,
 )

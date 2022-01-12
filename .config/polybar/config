@@ -162,7 +162,7 @@ format-background = ${colors.color1}
 format-foreground = ${colors.background}
 format-padding = 1
 
-label = %mb_used%+%mb_swap_used%
+label = %mb_used%
 
 [module/eth]
 type = internal/network
