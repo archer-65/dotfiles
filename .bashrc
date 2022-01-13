@@ -5,9 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-## PATH
-PATH="$PATH:$HOME/.local/bin"
-
 ## PROMPT
 PS1="\[\e[32m\]π "
 PS1+="\[\e[33m\]\W "
@@ -15,7 +12,12 @@ PS1+="\[\e[m\]"
 
 ## ALIAS
 # Utils
-alias ls='ls --color=auto'
+#alias ls='ls --color=auto'
+alias ls='exa'
+alias cat='bat'
+alias find='fd'
+
+[ -f "$HOME/.config/lf/diricons" ] && source "$HOME/.config/lf/diricons"
 alias lf='lfrun'
 
 # Pacman - Paru - Flatpak
@@ -44,7 +46,6 @@ pfetch
 
 ## STARSHIP
 eval "$(starship init bash)"
-
 
 # BEGIN_KITTY_SHELL_INTEGRATION
 if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi

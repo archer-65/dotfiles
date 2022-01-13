@@ -110,3 +110,12 @@ cmd setwallpaper ${{
 # Preview
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/cleaner
+
+# Icons
+set icons
+
+# Borders
+set drawbox
+
+# Mappings
+map . set hidden!

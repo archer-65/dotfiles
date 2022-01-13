@@ -54,7 +54,7 @@ mixer       = terminal + " -e pulsemixer"
 @hook.subscribe.startup_once
 def autostart():
     subprocess.call([path.join(qtile_path, "autostart.sh")])
-
+    
 ####################
 ##### KEYBINDS #####
 ####################
@@ -199,6 +199,10 @@ keys = [
         desc="Toggle floating for focused window"),
 
     # Qtile utils
+    Key([mod, "control"], "b",
+        lazy.hide_show_bar("top"),
+        desc="Toggle bar"),
+    
     Key([mod, "control"], "r",
         lazy.reload_config(),
         desc="Reload the config"),
@@ -618,6 +622,30 @@ screens= [
 ########################
 ##### LAST DETAILS #####
 ########################
+
+##### FUNCTIONS #####
+
+# Show/Hide bar based on layout
+def _bar(qtile):
+    # Get the bar 
+    bar = qtile.current_screen.top
+    # Check the layout and hide bar accordingly
+    if(qtile.current_layout.info()['name'] == 'max'):
+        bar.show(False)
+
+@hook.subscribe.layout_change
+def layout_change(layout,group):
+    _bar(qtile)
+    
+@hook.subscribe.changegroup
+def group_change():
+    _bar(qtile)
+
+@hook.subscribe.client_focus
+def focus_change(window):
+    _bar(qtile)       
+
+##### OTHER #####
 
 extension_defaults = widget_defaults.copy()
 
