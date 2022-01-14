@@ -417,7 +417,7 @@ layouts = [
 floating_layout = layout.Floating(
     float_rules=[
         *layout.Floating.default_float_rules,
-        Match(wm_class='thunar'),
+        Match(wm_class='Thunar'),
         Match(wm_class='confirmreset'), 
         Match(wm_class='bitwarden'),  
         Match(wm_class='makebranch'), 
