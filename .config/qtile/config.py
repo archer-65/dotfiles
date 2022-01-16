@@ -39,7 +39,7 @@ volume      = path.join(scripts, "volume")
 # Programs
 terminal    = "alacritty"
 filemanager = "thunar"
-browser     = "google-chrome-stable"
+browser     = "firefox"
 editor      = "emacsclient -c -a emacs"
 mail        = editor + " --eval '(mu4e)'"
 #git         = editor + " --eval '(magit)'"
