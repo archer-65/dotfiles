@@ -632,6 +632,8 @@ def _bar(qtile):
     # Check the layout and hide bar accordingly
     if(qtile.current_layout.info()['name'] == 'max'):
         bar.show(False)
+    else:
+        bar.show(True)
 
 @hook.subscribe.layout_change
 def layout_change(layout,group):
