@@ -497,6 +497,8 @@ def laptop_extra():
                 low_percentage=0.15,
                 notify_below=0.1,
             ),
+
+            sep(),
         ]
     return widgets_list
 
