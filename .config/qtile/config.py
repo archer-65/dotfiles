@@ -437,9 +437,6 @@ floating_layout = layout.Floating(
 
 ##### CALLBACKS FUNCT #####
 
-def open_updates():
-    qtile.cmd_spawn(update)
-
 def open_mixer():
     qtile.cmd_spawn(mixer)
 
@@ -556,7 +553,7 @@ screens= [
                     display_format=" {updates} updates",
                     no_update_string="  no updates",
                     update_interval=1800,
-                    mouse_callbacks={"Button1": open_updates},
+                    execute=update,
                 ),
 
                 sep(),
