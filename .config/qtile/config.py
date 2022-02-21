@@ -364,11 +364,14 @@ mouse = [
 
 groups = [
     Group("1", label="一", layout="monadtall"),
-    Group("2", label="二", layout="columns"),
+    Group("2", label="二", layout="columns"  ),
     Group("3", label="三", layout="monadtall"),
     Group("4", label="四", layout="monadtall"),
     Group("5", label="五", layout="monadtall"),
     Group("6", label="六", layout="monadtall"),
+    Group("7", label="七", layout="monadtall"),
+    Group("8", label="八", layout="monadtall"),
+    Group("9", label="九", layout="monadtall"),
 ]
 
 for i in groups:
