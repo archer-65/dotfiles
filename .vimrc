@@ -5,13 +5,14 @@ call plug#begin('~/.vim/plugged')
 	Plug 'arcticicestudio/nord-vim'
 	Plug 'SirVer/ultisnips'
 	Plug 'honza/vim-snippets'
-	Plug 'dracula/vim', { 'as': 'dracula' }  
+	Plug 'dracula/vim', { 'as': 'dracula' } 
+	Plug 'joshdick/onedark.vim', { 'as': 'onedark' }	
 	Plug 'iandwelker/rose-pine-vim'
 call plug#end()
 
 syntax on
 set number
-colorscheme rose-pine-dark 
+colorscheme onedark 
 set tabstop=2
 set showcmd
 set cursorline
@@ -19,7 +20,7 @@ filetype indent on
 set wildmenu
 set showmatch
 set foldenable
-let g:airline_theme='dracula'
+let g:airline_theme='onedark'
 let g:airline_powerline_fonts=1
 highlight Normal ctermbg=None
 

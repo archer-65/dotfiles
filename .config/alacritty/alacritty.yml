@@ -116,7 +116,7 @@ font:
 
 # Colors
 import:
-  - ~/.config/alacritty/rose-pine.yml
+  - ~/.config/alacritty/onedark.yml
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"

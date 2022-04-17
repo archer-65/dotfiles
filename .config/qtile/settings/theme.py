@@ -6,7 +6,7 @@ home       = path.expanduser('~')
 qtile_path = path.join(home, ".config", "qtile")
 
 def load_theme():
-    theme = "rose-pine-moon"
+    theme = "onedark"
 
     config = path.join(qtile_path, "colors.json")
     if path.isfile(config):
@@ -23,7 +23,6 @@ def load_theme():
     
     with open(path.join(theme_file)) as f:
         return json.load(f)
-
 
 if __name__ == "settings.theme":
     colors = load_theme()
