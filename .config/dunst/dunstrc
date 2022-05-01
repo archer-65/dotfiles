@@ -11,8 +11,8 @@
     width = (300, 500)
     height = 300
 
-    origin = bottom-right
-    offset = 10x10
+    origin = top-right
+    offset = 5x40
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
