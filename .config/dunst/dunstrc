@@ -36,8 +36,8 @@
     transparency = 0
 
     separator_height = 1
-    padding = 10
-    horizontal_padding = 10
+    padding = 15
+    horizontal_padding = 15
     text_icon_padding = 15
 
     frame_width = 2
@@ -50,7 +50,7 @@
 
     ### Text ###
 
-    font = Fira Code 13, Font Awesome 13
+    font = JetBrainsMono Nerd Font 12#, Font Awesome 13
     line_height = 0
 
     markup = full
@@ -77,7 +77,7 @@
     ### Icons ###
     icon_position = left
     min_icon_size = 0
-    max_icon_size = 64
+    max_icon_size = 48
 	  icon_theme = kora
 		enable_recursive_icon_lookup = true
     #icon_path = /usr/share/icons/rose-pine-moon-icons/48x48/status/:/usr/share/icons/rose-pine-moon-icons/48x48/devices/:/usr/share/icons/rose-pine-moon-icons/48x48/apps/
